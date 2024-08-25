@@ -1,4 +1,3 @@
-import { Entity } from "typeorm";
 import {
   Column,
   CreateDateColumn,
@@ -9,7 +8,7 @@ import {
 } from "typeorm";
 
 @Entity({ name: "comment" })
-export class Comment {
+export class CommentEntity {
   @PrimaryGeneratedColumn()
   CommentId: number;
 

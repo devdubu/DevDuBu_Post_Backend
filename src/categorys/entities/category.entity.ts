@@ -1,4 +1,3 @@
-import { Entity } from "typeorm";
 import {
   Column,
   CreateDateColumn,
@@ -8,7 +7,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 @Entity({ name: "category" })
-export class Category {
+export class CategoryEntity {
   @PrimaryGeneratedColumn()
   CategoryId: number;
 
