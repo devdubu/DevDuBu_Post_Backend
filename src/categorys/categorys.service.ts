@@ -9,7 +9,7 @@ export class CategorysService {
   }
 
   findAll() {
-    return `This action returns all categorys`;
+    return 'This action returns all categorys';
   }
 
   findOne(id: number) {

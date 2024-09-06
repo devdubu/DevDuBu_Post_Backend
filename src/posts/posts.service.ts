@@ -1,21 +1,26 @@
-import { Injectable } from "@nestjs/common";
-import { CreatePostDto } from "./dto/create-post.dto";
-import { UpdatePostDto } from "./dto/update-post.dto";
-import { DataSource, Repository } from "typeorm";
-import { InjectRepository } from "@nestjs/typeorm";
-import { PostEntity } from "./entities/post.entity";
+import { Injectable } from '@nestjs/common';
+import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
+import { DataSource, Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { PostEntity } from './entities/post.entity';
+import { transResForm } from 'utils/response';
 
 @Injectable()
 export class PostsService {
   @InjectRepository(PostEntity) private postRepository: Repository<PostEntity>;
   constructor(private dataSource: DataSource) {}
 
-  create(createPostDto: CreatePostDto) {
-    return "This action adds a new post";
+  async create(createPostDto: CreatePostDto) {
+    console.log(createPostDto);
+    const post = await this.postRepository.insert(createPostDto);
+
+    return transResForm(post);
   }
 
-  findAll() {
-    return `This action returns all posts`;
+  async findAll() {
+    const post = await this.postRepository.findAndCount();
+    return post;
   }
 
   async findOne(id: number, category: string): Promise<object> {
@@ -26,8 +31,9 @@ export class PostsService {
     return post;
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+  async update(id: { PostId: number }, updatePostDto: UpdatePostDto) {
+    const post = await this.postRepository.update(id, { ...updatePostDto });
+    return post;
   }
 
   remove(id: number) {

@@ -9,7 +9,7 @@ export class CommentMasterService {
   }
 
   findAll() {
-    return `This action returns all commentMaster`;
+    return 'This action returns all commentMaster';
   }
 
   findOne(id: number) {

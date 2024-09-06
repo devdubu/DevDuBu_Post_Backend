@@ -5,12 +5,15 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from "typeorm";
+} from 'typeorm';
 
-@Entity({ name: "post" })
+@Entity({ name: 'post' })
 export class PostEntity {
   @PrimaryGeneratedColumn()
   PostId: number;
+
+  @Column()
+  CategoryId: number;
 
   @Column()
   UserId: string;

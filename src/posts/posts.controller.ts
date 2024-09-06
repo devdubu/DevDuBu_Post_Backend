@@ -6,39 +6,44 @@ import {
   Patch,
   Param,
   Delete,
-  Req,
   Query,
-} from "@nestjs/common";
-import { PostsService } from "./posts.service";
-import { CreatePostDto } from "./dto/create-post.dto";
-import { UpdatePostDto } from "./dto/update-post.dto";
+} from '@nestjs/common';
+import { PostsService } from './posts.service';
+import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
 
-@Controller("posts")
+@Controller('posts')
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
-
-  @Post()
-  create(@Body() createPostDto: CreatePostDto) {
-    return this.postsService.create(createPostDto);
-  }
 
   @Get()
   findAll() {
     return this.postsService.findAll();
   }
 
-  @Get(":id")
-  findOne(@Param("id") id: string, @Query() query) {
-    return this.postsService.findOne(+id, query?.category ?? "all");
+  @Post(':id')
+  create(@Body() createPostDto: CreatePostDto) {
+    return this.postsService.create(createPostDto);
   }
 
-  @Patch(":id")
-  update(@Param("id") id: string, @Body() updatePostDto: UpdatePostDto) {
-    return this.postsService.update(+id, updatePostDto);
+  @Get(':id')
+  findOne(@Param('id') id: string, @Query() query) {
+    return this.postsService.findOne(+id, query?.category ?? 'all');
   }
 
-  @Delete(":id")
-  remove(@Param("id") id: string) {
+  @Patch(':id')
+  async update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
+    const updateRes = await this.postsService.update(
+      { PostId: parseInt(id) },
+      updatePostDto,
+    );
+    console.log(updateRes);
+    return updateRes;
+  }
+
+  // TODO 추후에 고려
+  @Delete(':id')
+  remove(@Param('id') id: string) {
     return this.postsService.remove(+id);
   }
 }

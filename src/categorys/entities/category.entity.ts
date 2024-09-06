@@ -5,8 +5,8 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from "typeorm";
-@Entity({ name: "category" })
+} from 'typeorm';
+@Entity({ name: 'category' })
 export class CategoryEntity {
   @PrimaryGeneratedColumn()
   CategoryId: number;
